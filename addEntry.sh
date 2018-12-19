@@ -85,17 +85,25 @@ fi
 # INITIAL CHECKINGS DONE
 # Creamos el archivo de nueva entrada de directorio
 dest_file="/usr/share/applications/${3,,}.desktop"
-touch ${dest_file}
+
+if [ -e ${dest_file} ]
+then
+    echo -n "There is currently a file with the same name. Do you want to replace it? (y/n)? "
+    read answer
+    if [ "${answer}" != "${answer#[Yy]}" ]
+    then
+        echo YES
+        rm -f ${dest_file}
+    else
+        exit
+    fi
+fi
 
 #Añadimos contenido
-echo "[Desktop Entry]"
-echo "Version=1.0"
-echo "Name=${3}"
-echo "Exec=${1}"
-echo "Icon=${2}"
-echo "Type=Application"
-
-
-
-
-echo "Llegamos"
+echo "[Desktop Entry]" > ${dest_file}
+echo "Version=1.0" >> ${dest_file}
+echo "Name=${3}" >> ${dest_file}
+echo "Exec=${1}" >> ${dest_file}
+echo "Icon=${2}" >> ${dest_file}
+echo "Type=Application" >> ${dest_file}
+exit
