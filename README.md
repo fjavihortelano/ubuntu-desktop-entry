@@ -14,7 +14,7 @@ $ chmod +x addEntry.sh
 ```
 3. Execute the file as sudo giving the following arguments:
 ```
-$sudo ./addEntry.sh <path_exec_file> <path_icon_file> <application_name>
+$ sudo ./addEntry.sh <path_exec_file> <path_icon_file> <application_name>
 ```
 Where
 ```
