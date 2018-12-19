@@ -13,8 +13,8 @@ OPTION:\n
 
 Arguments (PATH_EXEC PATH_ICON) are mandatory on the command line.\n\n
 
-    \tPATH_EXEC:      path to executable file\n
-    \tPATH_ICON:      path to the image icon (.png, .jpg, .jpeg, .ico)"
+    \tPATH_EXEC:      absolute path to executable file\n
+    \tPATH_ICON:      absolute path to the image icon (.png, .jpg, .jpeg, .ico)"
 
 # Check for help
 if [ ${1} == "-h" ] || [ ${1} == "--help" ]
@@ -38,31 +38,43 @@ fi
 
 # FIRST ARGUMENT
 # Check if first argument is valid
-if [ ! -e ${1} ] || [ -d ${1} ]
+if [ ${1:0:1} != "/" ]
 then
-    echo "The path to executable file is wrong or the file doesn't exists."
+    echo "The first arg must be an absolute path, not relative."
     exit
 else
-    # Check if first argument is executable
-    if [ ! -x ${1} ]
+    if [ ! -e ${1} ] || [ -d ${1} ]
     then
-        echo "The executable file does not have executable permissions. Try 'chmod +x <path_to_file>'."
+        echo "The path to executable file is wrong or the file doesn't exists."
         exit
+    else
+        # Check if first argument is executable
+        if [ ! -x ${1} ]
+        then
+            echo "The executable file does not have executable permissions. Try 'chmod +x <path_to_file>'."
+            exit
+        fi
     fi
 fi
 
 # SECOND ARGUMENT
 # Check if second argument is valid
-if [ ! -e ${2} ] || [ -d ${2} ]
+if [ ${2:0:1} != "/" ]
 then
-    echo "The path to icon file is wrong or the file doesn't exists."
+    echo "The second arg must be an absolute path, not relative."
     exit
 else
-    # Check if file extension is correct ()
-    if [ ${2: -4} != ".png" ] && [ ${2: -4} != ".jpg" ] && [ ${2: -4} != ".ico" ] && [ ${2: -5} != ".jpeg" ]
+    if [ ! -e ${2} ] || [ -d ${2} ]
     then
-        echo "The icon extension is incorrect. Only .png, .jpg, .jpeg, .ico are allowed."
+        echo "The path to icon file is wrong or the file doesn't exists."
         exit
+    else
+        # Check if file extension is correct ()
+        if [ ${2: -4} != ".png" ] && [ ${2: -4} != ".jpg" ] && [ ${2: -4} != ".ico" ] && [ ${2: -5} != ".jpeg" ]
+        then
+            echo "The icon extension is incorrect. Only .png, .jpg, .jpeg, .ico are allowed."
+            exit
+        fi
     fi
 fi
 
