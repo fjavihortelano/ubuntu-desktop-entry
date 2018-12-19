@@ -5,7 +5,7 @@ This program allows to create a new desktop entry in Launchpad for a new app or 
 ### Usage
 1. Download the zip or clone the current repository:
 ```
-$ git clone https://github.com/JaviHort/UbuntuDesktopEntry.git
+$ git clone https://github.com/ptricor/ubuntu-desktop-entry.git
 ```
 2. Give execution permission:
 ```
