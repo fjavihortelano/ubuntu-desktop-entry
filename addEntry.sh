@@ -83,7 +83,7 @@ else
 fi
 
 # INITIAL CHECKINGS DONE
-# Creamos el archivo de nueva entrada de directorio
+# Create new desktop entry
 dest_file="/usr/share/applications/${3,,}.desktop"
 
 if [ -e ${dest_file} ]
@@ -99,7 +99,7 @@ then
     fi
 fi
 
-#Añadimos contenido
+# Fill with content
 echo "[Desktop Entry]" > ${dest_file}
 echo "Version=1.0" >> ${dest_file}
 echo "Name=${3}" >> ${dest_file}
