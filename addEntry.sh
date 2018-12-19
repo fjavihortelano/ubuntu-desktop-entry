@@ -1,6 +1,6 @@
 #!/bin/bash
 
-help=" Usage: sudo $(basename "${0}") [OPTION] PATH_EXEC PATH_ICON\n
+help=" Usage: sudo $(basename "${0}") [OPTION] PATH_EXEC PATH_ICON APP_NAME\n
 Program to create a new desktop entry for an application\n which is executed from command line calling to an executable file.\n
 It doesn't work if it is not an installed application.\n\n
 
@@ -14,7 +14,8 @@ OPTION:\n
 Arguments (PATH_EXEC PATH_ICON) are mandatory on the command line.\n\n
 
     \tPATH_EXEC:      absolute path to executable file\n
-    \tPATH_ICON:      absolute path to the image icon (.png, .jpg, .jpeg, .ico)"
+    \tPATH_ICON:      absolute path to the image icon (.png, .jpg, .jpeg, .ico)\n
+    \tAPP_NAME:       application name (if it contains spaces, the name must go between \" \"."
 
 # Check for help
 if [ ${1} == "-h" ] || [ ${1} == "--help" ]
@@ -30,9 +31,12 @@ if [ "$EUID" -ne 0 ]
 fi
 
 # Check if there are 2 arguments
-if [ ! ${#} -eq 2 ]
+if [ ! ${#} -eq 3 ]
 then
-    echo "2 arguments are needed."
+    echo -e "3 arguments are needed:
+\tAbsolute path to the executable file
+\tAbsolute path to the icon file
+\tName of the application"
     exit
 fi
 
@@ -79,7 +83,17 @@ else
 fi
 
 # INITIAL CHECKINGS DONE
+# Creamos el archivo de nueva entrada de directorio
+dest_file="/usr/share/applications/${3,,}.desktop"
+touch ${dest_file}
 
+#Añadimos contenido
+echo "[Desktop Entry]"
+echo "Version=1.0"
+echo "Name=${3}"
+echo "Exec=${1}"
+echo "Icon=${2}"
+echo "Type=Application"
 
 
 
