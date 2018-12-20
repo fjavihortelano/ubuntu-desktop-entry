@@ -84,7 +84,8 @@ fi
 
 # INITIAL CHECKINGS DONE
 # Create new desktop entry
-dest_file="/usr/share/applications/${3,,}.desktop"
+filtered_name=${3,,}
+dest_file="/usr/share/applications/${filtered_name// /_}.desktop"
 
 if [ -e ${dest_file} ]
 then
