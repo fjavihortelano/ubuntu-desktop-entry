@@ -15,7 +15,7 @@ Arguments (PATH_EXEC PATH_ICON) are mandatory on the command line.\n\n
 
     \tPATH_EXEC:      absolute path to executable file\n
     \tPATH_ICON:      absolute path to the image icon (.png, .jpg, .jpeg, .ico)\n
-    \tAPP_NAME:       application name (if it contains spaces, the name must go between \" \"."
+    \tAPP_NAME:       application name (if it contains spaces, the name must go between \" \")."
 
 # Check for help
 if [ ${1} == "-h" ] || [ ${1} == "--help" ]
