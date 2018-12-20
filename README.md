@@ -9,7 +9,7 @@ $ git clone https://github.com/ptricor/ubuntu-desktop-entry.git
 ```
 2. Give execution permission:
 ```
-$ cd UbuntuDesktopEntry/
+$ cd ubuntu-desktop-entry/
 $ chmod +x addEntry.sh
 ```
 3. Execute the file as sudo giving the following arguments:
