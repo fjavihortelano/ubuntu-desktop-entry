@@ -31,7 +31,7 @@ then
     exit
 fi
 
-# Check if there are 2 arguments
+# Check if there are 3 arguments
 if [ ! ${#} -eq 3 ]
 then
     echo -e "3 arguments are needed:
