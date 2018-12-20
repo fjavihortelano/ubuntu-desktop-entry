@@ -26,8 +26,9 @@ fi
 
 # Check if sudo
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root (sudo)."
-  exit
+then 
+    echo "Please run as root (sudo)."
+    exit
 fi
 
 # Check if there are 2 arguments
