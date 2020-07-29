@@ -75,9 +75,9 @@ else
         exit
     else
         # Check if file extension is correct ()
-        if [ ${2: -4} != ".png" ] && [ ${2: -4} != ".jpg" ] && [ ${2: -4} != ".ico" ] && [ ${2: -5} != ".jpeg" ]
+        if [ ${2: -4} != ".png" ] && [ ${2: -4} != ".jpg" ] && [ ${2: -4} != ".ico" ] && [ ${2: -5} != ".jpeg" ] && [ ${2: -4} != ".xpm" ]
         then
-            echo "The icon extension is incorrect. Only .png, .jpg, .jpeg, .ico are allowed."
+            echo "The icon extension is incorrect. Only .png, .jpg, .jpeg, .ico, .xpm are allowed."
             exit
         fi
     fi
