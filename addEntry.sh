@@ -41,6 +41,8 @@ then
     exit
 fi
 
+image_file_extension=(".png" ".jpg" ".ico" ".jpeg" ".xpm" ".svg")
+
 # FIRST ARGUMENT
 # Check if first argument is valid
 if [ ${1:0:1} != "/" ]
@@ -74,38 +76,42 @@ else
         echo "The path to icon file is wrong or the file doesn't exists."
         exit
     else
-        # Check if file extension is correct ()
-        if [ ${2: -4} != ".png" ] && [ ${2: -4} != ".jpg" ] && [ ${2: -4} != ".ico" ] && [ ${2: -5} != ".jpeg" ] && [ ${2: -4} != ".xpm" ]
-        then
-            echo "The icon extension is incorrect. Only .png, .jpg, .jpeg, .ico, .xpm are allowed."
-            exit
-        fi
-    fi
-fi
+        # Allowed image formats
+        for format in ${image_file_extension[@]}
+        do
+            
+            # Check if file extension is correct ()
+            if [ ${2: -4} == $format ] || [ ${2: -5} == $format ]
+            then
+                # INITIAL CHECKINGS DONE
+                # Create new desktop entry
+                filtered_name=${3,,}
+                dest_file="/usr/share/applications/${filtered_name// /_}.desktop"
 
-# INITIAL CHECKINGS DONE
-# Create new desktop entry
-filtered_name=${3,,}
-dest_file="/usr/share/applications/${filtered_name// /_}.desktop"
+                if [ -e ${dest_file} ]
+                then
+                    echo -n "There is currently a file with the same name. Do you want to replace it? (y/n)? "
+                    read answer
+                    if [ "${answer}" != "${answer#[Yy]}" ]
+                    then
+                        echo YES
+                        rm -f ${dest_file}
+                    else
+                        exit
+                    fi
+                fi
 
-if [ -e ${dest_file} ]
-then
-    echo -n "There is currently a file with the same name. Do you want to replace it? (y/n)? "
-    read answer
-    if [ "${answer}" != "${answer#[Yy]}" ]
-    then
-        echo YES
-        rm -f ${dest_file}
-    else
+                # Fill with content
+                echo "[Desktop Entry]" > ${dest_file}
+                echo "Version=1.0" >> ${dest_file}
+                echo "Name=${3}" >> ${dest_file}
+                echo "Exec=${1}" >> ${dest_file}
+                echo "Icon=${2}" >> ${dest_file}
+                echo "Type=Application" >> ${dest_file}
+                exit
+            fi
+        done
+        echo "The icon extension is incorrect. Only .png, .jpg, .jpeg, .ico, .xpm, .svg are allowed."
         exit
     fi
 fi
-
-# Fill with content
-echo "[Desktop Entry]" > ${dest_file}
-echo "Version=1.0" >> ${dest_file}
-echo "Name=${3}" >> ${dest_file}
-echo "Exec=${1}" >> ${dest_file}
-echo "Icon=${2}" >> ${dest_file}
-echo "Type=Application" >> ${dest_file}
-exit
